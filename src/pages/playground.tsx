@@ -10,6 +10,7 @@ import { toast } from "react-hot-toast";
 // @ts-ignore
 import getTweetId from "get-tweet-id";
 import BasicTemplate from "@/templates/Basic";
+import themes from "@/data/themes";
 
 const ReactFlow = dynamic(() => import("reactflow"), {
   loading: () => <p>Loading...</p>,
@@ -28,6 +29,7 @@ const initialNodes = [
 function Playground() {
   const [tweetData, setTweetData] = useState<Tweet | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [activeTheme, setActiveTheme] = useState("light");
 
   const inputRef = useRef<HTMLInputElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
@@ -111,7 +113,22 @@ function Playground() {
             </div>
 
             <div className="border-b-zinc-800 border-b-2 px-4 py-6">
-              <h2 className="text-white">theme</h2>
+              <h2 className="text-white mb-4">theme</h2>
+
+              <div className="flex gap-2 flex-wrap">
+                {themes.map((theme) => (
+                  <button
+                    key={theme}
+                    data-theme={theme}
+                    data-tip={theme}
+                    className="rounded-sm border-2 border-zinc-500 flex w-12 h-12 tooltip tooltip-bottom"
+                    onClick={() => setActiveTheme(theme)}
+                  >
+                    <div className="bg-primary h-full w-6"></div>
+                    <div className="bg-base-100 h-full w-6"></div>
+                  </button>
+                ))}
+              </div>
             </div>
 
             <div className="border-b-zinc-800 border-b-2 px-4 py-6">
@@ -132,7 +149,7 @@ function Playground() {
           </div>
         </div>
 
-        <div className="bg-zinc-900/50">
+        <div data-theme={activeTheme} className="bg-zinc-900/50">
           <ReactFlow nodes={initialNodes} nodeTypes={nodeTypes} />
         </div>
       </div>

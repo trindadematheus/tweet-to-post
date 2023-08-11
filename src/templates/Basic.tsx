@@ -25,26 +25,28 @@ function BasicTemplate({ tweetData }: BasicTemplateProps) {
   }, [tweetData]);
 
   return (
-    <div>
-      <div
-        id="tweet-template"
-        className="bg-black w-[600px] h-[600px] flex flex-col justify-center px-20 items-start"
-      >
-        <div className="flex items-center gap-4">
-          <img
-            className="rounded-full w-14 h-14"
-            src={data.avatar_url}
-            alt={`${data.user_name} profile pic`}
-          />
+    <div
+      id="tweet-template"
+      className="bg-base-100 w-[600px] h-[600px] flex flex-col justify-center px-14 items-start"
+    >
+      <div className="flex items-center gap-4">
+        <img
+          className="rounded-full w-14 h-14"
+          src={data.avatar_url}
+          alt={`${data.user_name} profile pic`}
+        />
 
-          <div>
-            <h1 className="text-zinc-300 text-xl font-bold -mb-1">{data.user_name}</h1>
-            <p className="text-zinc-500">@{data.screen_name}</p>
-          </div>
+        <div>
+          <h1 className="text-base-content text-xl font-bold -mb-1">
+            {data.user_name}
+          </h1>
+          <p className="text-base-content/50">@{data.screen_name}</p>
         </div>
-
-        <p className="text-zinc-200 text-xl mt-6">{data.text}</p>
       </div>
+
+      <p className="text-base-content text-xl whitespace-pre-line mt-6">
+        {data.text}
+      </p>
     </div>
   );
 }
