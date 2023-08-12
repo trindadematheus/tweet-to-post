@@ -1,11 +1,13 @@
 import { useMemo } from "react";
 import { Tweet } from "react-tweet/api";
+import { MdVerified } from "react-icons/md";
 
 type BasicTemplateProps = {
   tweetData: Tweet | null;
+  isVerified?: boolean;
 };
 
-function BasicTemplate({ tweetData }: BasicTemplateProps) {
+function BasicTemplate({ tweetData, isVerified }: BasicTemplateProps) {
   const data = useMemo(() => {
     if (tweetData) {
       return {
@@ -37,9 +39,18 @@ function BasicTemplate({ tweetData }: BasicTemplateProps) {
         />
 
         <div>
-          <h1 className="text-base-content text-xl font-bold -mb-1">
-            {data.user_name}
-          </h1>
+          <div className="flex items-end gap-1">
+            <h1 className="text-base-content text-xl font-bold -mb-1">
+              {data.user_name}
+            </h1>
+
+            {isVerified && (
+              <div className="mb-[2px] text-primary">
+                <MdVerified />
+              </div>
+            )}
+          </div>
+
           <p className="text-base-content/50">@{data.screen_name}</p>
         </div>
       </div>

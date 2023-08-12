@@ -1,16 +1,20 @@
 import dynamic from "next/dynamic";
-import { Background, Controls, Panel } from "reactflow";
 import { FormEvent, useRef, useState } from "react";
 import { Tweet } from "react-tweet/api";
 import axios from "axios";
 import downloadjs from "downloadjs";
 import html2canvas from "html2canvas";
 import { toast } from "react-hot-toast";
+import { FaGithub, FaSearch } from "react-icons/fa";
 
 // @ts-ignore
 import getTweetId from "get-tweet-id";
 import BasicTemplate from "@/templates/Basic";
 import themes from "@/data/themes";
+import Head from "next/head";
+import { Background } from "reactflow";
+
+import 'reactflow/dist/style.css';
 
 const ReactFlow = dynamic(() => import("reactflow"), {
   loading: () => <p>Loading...</p>,
@@ -30,6 +34,7 @@ function Playground() {
   const [tweetData, setTweetData] = useState<Tweet | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [activeTheme, setActiveTheme] = useState("light");
+  const [isVerified, setIsVerified] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
@@ -74,16 +79,30 @@ function Playground() {
   }
 
   const nodeTypes = {
-    template: () => <BasicTemplate tweetData={tweetData} />,
+    template: () => (
+      <BasicTemplate isVerified={isVerified} tweetData={tweetData} />
+    ),
   };
 
   return (
     <>
+      <Head>
+        <title>Playground - tweetx</title>
+      </Head>
+
       <div className="h-screen w-full grid grid-cols-[400px,1fr]">
         <div className="left-panel bg-zinc-900 flex flex-col justify-between">
           <div>
-            <div className="border-b-zinc-800 border-b-2 px-4 py-6">
-              <h1 className="text-xl font-bold text-white">xpost</h1>
+            <div className="flex items-center justify-between border-b-zinc-800 border-b-2 px-4 py-6">
+              <h1 className="text-xl font-bold text-white">tweetx</h1>
+
+              <a
+                target="_blank"
+                href="https://github.com/trindadematheus/tweet-to-post"
+                className="btn btn-ghost"
+              >
+                <FaGithub size={22} />
+              </a>
             </div>
 
             <div className="border-b-zinc-800 border-b-2 px-4 py-6">
@@ -91,12 +110,12 @@ function Playground() {
                 <div className="flex items-end gap-2">
                   <div className="form-control w-full max-w-xs">
                     <label className="label">
-                      <span className="label-text">Insert tweet URL</span>
+                      <span className="label-text">insert tweet URL</span>
                     </label>
                     <input
                       ref={inputRef}
                       type="text"
-                      placeholder="Paste here"
+                      placeholder="paste here"
                       className="input input-bordered w-full max-w-xs"
                     />
                   </div>
@@ -106,14 +125,19 @@ function Playground() {
                       isLoading && "btn-loading btn-disabled"
                     }`}
                   >
-                    search
+                    <FaSearch size={18} />
                   </button>
                 </div>
               </form>
             </div>
 
             <div className="border-b-zinc-800 border-b-2 px-4 py-6">
-              <h2 className="text-white mb-4">theme</h2>
+              <h2 className="text-white mb-4">
+                theme{" "}
+                <span data-theme={activeTheme} className="badge badge-primary">
+                  {activeTheme}
+                </span>
+              </h2>
 
               <div className="flex gap-2 flex-wrap">
                 {themes.map((theme) => (
@@ -121,7 +145,11 @@ function Playground() {
                     key={theme}
                     data-theme={theme}
                     data-tip={theme}
-                    className="rounded-sm border-2 border-zinc-500 flex w-12 h-12 tooltip tooltip-bottom"
+                    className={`rounded-sm flex w-12 h-12 tooltip tooltip-bottom ${
+                      activeTheme === theme
+                        ? "border-purple-600 border-4"
+                        : "border-zinc-500 border-2"
+                    }`}
                     onClick={() => setActiveTheme(theme)}
                   >
                     <div className="bg-primary h-full w-6"></div>
@@ -133,6 +161,21 @@ function Playground() {
 
             <div className="border-b-zinc-800 border-b-2 px-4 py-6">
               <h2 className="text-white">template</h2>
+            </div>
+
+            <div className="border-b-zinc-800 border-b-2 px-4 py-6">
+              <h2 className="text-white mb-4">settings</h2>
+
+              <label className="flex gap-2 items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={isVerified}
+                  className="checkbox checkbox-primary"
+                  onChange={() => setIsVerified(!isVerified)}
+                />
+
+                <span className="">User verified</span>
+              </label>
             </div>
           </div>
 
@@ -150,7 +193,9 @@ function Playground() {
         </div>
 
         <div data-theme={activeTheme} className="bg-zinc-900/50">
-          <ReactFlow nodes={initialNodes} nodeTypes={nodeTypes} />
+          <ReactFlow nodes={initialNodes} nodeTypes={nodeTypes}>
+            <Background />
+          </ReactFlow>
         </div>
       </div>
     </>
