@@ -17,7 +17,6 @@
     "axios": "^1.4.0",
     "daisyui": "^3.5.1",
     "downloadjs": "^1.4.7",
-    "get-tweet-id": "^1.0.5",
     "html2canvas": "^1.4.1",
     "next": "13.4.13",
     "postcss": "8.4.27",

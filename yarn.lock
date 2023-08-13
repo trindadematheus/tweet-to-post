@@ -1153,11 +1153,6 @@ function-bind@^1.1.1:
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
   integrity sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==
 
-get-tweet-id@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/get-tweet-id/-/get-tweet-id-1.0.5.tgz#b5b8968d1ad60966dec6c26ec185c037192f2f41"
-  integrity sha512-FG8cZCr+HX+QRbYk2IOvqSF1MrewXiRS8cYFWk9s72bGYbhATNHS5uUWJLIRi+Yvc4du2qkdANWVYm4Q4691eQ==
-
 glob-parent@^5.1.2, glob-parent@~5.1.2:
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-5.1.2.tgz#869832c58034fe68a4093c17dc15e8340d8401c4"

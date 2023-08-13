@@ -40,7 +40,7 @@ function BasicTemplate({ tweetData, isVerified }: BasicTemplateProps) {
 
         <div>
           <div className="flex items-end gap-1">
-            <h1 className="text-base-content text-xl font-bold -mb-1">
+            <h1 className="text-base-content text-xl font-bold">
               {data.user_name}
             </h1>
 

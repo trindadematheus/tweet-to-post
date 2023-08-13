@@ -11,6 +11,7 @@ const handler = async (req: VercelRequest, res: VercelResponse) => {
 
   try {
     const tweet = await getTweet(tweetId);
+    
     res.status(tweet ? 200 : 404).json({ data: tweet ?? null });
   } catch (error: any) {
     res.status(400).json({ error: error.message ?? "Bad request." });

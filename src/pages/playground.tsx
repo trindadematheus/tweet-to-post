@@ -6,15 +6,14 @@ import downloadjs from "downloadjs";
 import html2canvas from "html2canvas";
 import { toast } from "react-hot-toast";
 import { FaGithub, FaSearch } from "react-icons/fa";
+import { Background } from "reactflow";
+import Head from "next/head";
 
-// @ts-ignore
-import getTweetId from "get-tweet-id";
 import BasicTemplate from "@/templates/Basic";
 import themes from "@/data/themes";
-import Head from "next/head";
-import { Background } from "reactflow";
 
-import 'reactflow/dist/style.css';
+import "reactflow/dist/style.css";
+import getIdFromTweet from "@/utils/get-id-from-tweet";
 
 const ReactFlow = dynamic(() => import("reactflow"), {
   loading: () => <p>Loading...</p>,
@@ -47,7 +46,7 @@ function Playground() {
 
       try {
         const { data } = await axios.get(
-          `/api/generate-tweet-image/${getTweetId(inputRef.current.value)}`
+          `/api/generate-tweet-image/${getIdFromTweet(inputRef.current.value)}`
         );
 
         setTweetData(data.data);
